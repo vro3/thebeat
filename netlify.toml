@@ -1,0 +1,27 @@
+# VERSION 1.0 | 2025-11-19
+# Netlify Configuration for VRCG Grey Ops
+
+[build]
+  command = "npm run build"
+  functions = "netlify/functions"
+  publish = "dist"
+
+[env]
+  # These will be set in Netlify UI, not here
+  [env.production]
+    environment = { VITE_OPENAI_API_KEY = "set-in-netlify-ui" }
+
+# Redirects for client-side routing (important for React apps)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers for security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
